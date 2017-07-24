@@ -226,7 +226,9 @@ if (!class_exists( 'eshaTestimonialWidget' )) {
 		}
 
 	}
+}
 
+if (!function_exists( 'esha_register_testimonial_widget' )) {
 	// register Foo_Widget widget
 	function esha_register_testimonial_widget() {
 	    register_widget( 'eshaTestimonialWidget' );
