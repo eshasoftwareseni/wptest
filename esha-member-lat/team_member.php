@@ -7,7 +7,7 @@ Author: Esha
 License: None
 */
 
-if (!function_exists( 'esha_testimonial_list' )) {
+if (!function_exists( 'create_team_member' )) {
 
     add_action( 'init', 'create_team_member' );
 
