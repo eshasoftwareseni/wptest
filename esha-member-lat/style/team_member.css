@@ -1,0 +1,13 @@
+.circular-image img {
+   width: 150px;
+   height: 150px;
+   -webkit-border-radius: 50%;
+   -moz-border-radius: 50%;
+   -ms-border-radius: 50%;
+   -o-border-radius: 50%;
+   border-radius: 50%;
+ }
+
+.testimonial{
+  text-align: center;
+}

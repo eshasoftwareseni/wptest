@@ -89,6 +89,15 @@ if (!function_exists( 'your_prefix_meta_boxes' )) {
     }
 }
 
+if (!function_exists( 'tmesha_theme_name_scripts' )) {
+
+    function tmesha_theme_name_scripts() {
+       wp_enqueue_style( 'team_member_style', plugins_url( 'style/team_member.css',  __FILE__ ) );
+    }
+
+    add_action( 'wp_enqueue_scripts', 'tmesha_theme_name_scripts' );
+}
+
 if (!function_exists( 'esha_team_member_shortcode' )) {
 
     function esha_team_member_shortcode( $atts ) {
@@ -105,23 +114,7 @@ if (!function_exists( 'esha_team_member_shortcode' )) {
                 ?>
                 <?php while ( $loop->have_posts() ) : $loop->the_post();?>
                     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-                        <header class="entry-header">
-                        <style type="text/css">
-                            .circular-image img {
-                               width: 150px;
-                               height: 150px;
-                               -webkit-border-radius: 50%;
-                               -moz-border-radius: 50%;
-                               -ms-border-radius: 50%;
-                               -o-border-radius: 50%;
-                                border-radius: 50%;
-                                  }
-
-                            .testimonial{
-                                text-align: center;
-                                }
-                        </style>
-             
+                        <header class="entry-header">      
                         <div class="testimonial">
                             <!-- Display featured image in right-aligned floating div -->
 
