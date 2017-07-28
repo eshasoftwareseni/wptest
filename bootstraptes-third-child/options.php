@@ -27,15 +27,6 @@ function optionsframework_option_name() {
 
 function optionsframework_options() {
 
-	// Test data
-	$test_array = array();
-	for($i=1;$i<=20;$i++){
-		$test_array[$i] = $i;
-	}
-
-	$default_perpage =  get_option( 'posts_per_page' );
-	$default_description = get_bloginfo( 'description', 'display' );
-
 	$options = array();
 
 	$options[] = array(
@@ -49,56 +40,11 @@ function optionsframework_options() {
 		'type' => 'upload');
 
 	$options[] = array(
-		'name' => __('Blog Description', 'options_check'),
-		'desc' => __('A text input field.', 'options_check'),
-		'id' => 'example_text',
-		'std' => $default_description,
-		'type' => 'text');
-
-	$options[] = array(
-		'name' => __( 'Select post per page', 'theme-textdomain' ),
-		'desc' => __( 'Choose post per page.', 'theme-textdomain' ),
-		'id' => 'perpage_select',
-		'std' => $default_perpage,
-		'type' => 'select',
-		'class' => 'mini', //mini, tiny, small
-		'options' => $test_array
-	);
-
-	$options[] = array(
-		'name' => __('Sidebar Checkbox', 'options_check'),
-		'desc' => __('Show sidebar on frontpage', 'options_check'),
-		'id' => 'sidebar_checkbox',
-		'std' => 1,
-		'type' => 'checkbox');
-
-	$options[] = array(
 		'name' => __('Maintenance Mode Checkbox', 'options_check'),
 		'desc' => __('Show maintenance mode page instead of normal page.', 'options_check'),
 		'id' => 'maintenance_checkbox',
 		'std' => 0,
 		'type' => 'checkbox');
-
-	/**
-	 * For $settings options see:
-	 * http://codex.wordpress.org/Function_Reference/wp_editor
-	 *
-	 * 'media_buttons' are not supported as there is no post to attach items to
-	 * 'textarea_name' is set by the 'id' you choose
-	 */
-
-	$wp_editor_settings = array(
-		'wpautop' => true, // Default
-		'textarea_rows' => 5,
-		'tinymce' => array( 'plugins' => 'wordpress,wplink' )
-	);
-
-	$options[] = array(
-		'name' => __('Footer Copyright', 'options_check'),
-		'desc' => __( 'You can write your footer copyright here.', 'options_check' ),
-		'id' => 'example_editor',
-		'type' => 'editor',
-		'settings' => $wp_editor_settings );
 
 	return $options;
 }

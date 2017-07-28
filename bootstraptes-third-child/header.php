@@ -33,8 +33,7 @@
         <?php } ?>
         <h1 class="blog-title"><?php bloginfo( 'name' ); ?></h1>
         <?php
-            $description_text = of_get_option( 'example_text', 'no entry' ); 
-            $description = (!empty($description_text)) ? $description_text : get_bloginfo( 'description', 'display' );
+            $description = get_bloginfo( 'description', 'display' );
             if($description) { ?><p class="lead blog-description"><?php echo $description ?></p><?php } ?>
     </div>
 

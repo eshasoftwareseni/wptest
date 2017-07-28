@@ -34,7 +34,6 @@ function optionsframework_options() {
 	}
 
 	$default_perpage =  get_option( 'posts_per_page' );
-	$default_description = get_bloginfo( 'description', 'display' );
 
 	$options = array();
 
@@ -47,13 +46,6 @@ function optionsframework_options() {
 		'desc' => __('This creates a full size uploader that previews the image.', 'options_check'),
 		'id' => 'example_uploader',
 		'type' => 'upload');
-
-	$options[] = array(
-		'name' => __('Blog Description', 'options_check'),
-		'desc' => __('A text input field.', 'options_check'),
-		'id' => 'example_text',
-		'std' => $default_description,
-		'type' => 'text');
 
 	$options[] = array(
 		'name' => __( 'Select post per page', 'theme-textdomain' ),
@@ -71,34 +63,6 @@ function optionsframework_options() {
 		'id' => 'sidebar_checkbox',
 		'std' => 1,
 		'type' => 'checkbox');
-
-	$options[] = array(
-		'name' => __('Maintenance Mode Checkbox', 'options_check'),
-		'desc' => __('Show maintenance mode page instead of normal page.', 'options_check'),
-		'id' => 'maintenance_checkbox',
-		'std' => 0,
-		'type' => 'checkbox');
-
-	/**
-	 * For $settings options see:
-	 * http://codex.wordpress.org/Function_Reference/wp_editor
-	 *
-	 * 'media_buttons' are not supported as there is no post to attach items to
-	 * 'textarea_name' is set by the 'id' you choose
-	 */
-
-	$wp_editor_settings = array(
-		'wpautop' => true, // Default
-		'textarea_rows' => 5,
-		'tinymce' => array( 'plugins' => 'wordpress,wplink' )
-	);
-
-	$options[] = array(
-		'name' => __('Footer Copyright', 'options_check'),
-		'desc' => __( 'You can write your footer copyright here.', 'options_check' ),
-		'id' => 'example_editor',
-		'type' => 'editor',
-		'settings' => $wp_editor_settings );
 
 	return $options;
 }
