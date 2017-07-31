@@ -24,6 +24,6 @@
     
 </div><!-- /.blog-main -->
 
-<?php if(is_front_page() == false OR of_get_option( 'sidebar_checkbox', 'no entry' ) == 1) get_sidebar(); ?>
+<?php get_sidebar(); ?>
 
 <?php get_footer(); ?>

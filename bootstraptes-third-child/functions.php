@@ -1,8 +1,13 @@
 <?php
-add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles' );
-function my_theme_enqueue_styles() {
-    wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
 
+if ( !function_exists( 'my_theme_enqueue_styles' ) ) {
+	
+	add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles' );
+
+	function my_theme_enqueue_styles() {
+	    wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
+
+	}
 }
 
 /* 
@@ -13,34 +18,36 @@ function my_theme_enqueue_styles() {
  */
 
 if ( !function_exists( 'of_get_option' ) ) {
-function of_get_option($name, $default = false) {
-	
-	$optionsframework_settings = get_option('optionsframework');
-	
-	// Gets the unique option id
-	$option_name = $optionsframework_settings['id'];
-	
-	if ( get_option($option_name) ) {
-		$options = get_option($option_name);
-	}
+	function of_get_option($name, $default = false) {
 		
-	if ( isset($options[$name]) ) {
-		return $options[$name];
-	} else {
-		return $default;
+		$optionsframework_settings = get_option('optionsframework');
+		
+		// Gets the unique option id
+		$option_name = $optionsframework_settings['id'];
+		
+		if ( get_option($option_name) ) {
+			$options = get_option($option_name);
+		}
+			
+		if ( isset($options[$name]) ) {
+			return $options[$name];
+		} else {
+			return $default;
+		}
 	}
-}
 }
 
 // Activate WordPress Maintenance Mode
-function wp_maintenance_mode(){
-	$maintenance = of_get_option( 'maintenance_checkbox', 'no entry' );
-	if ( $maintenance == 1 ) :
-	    if(!current_user_can('edit_themes') || !is_user_logged_in()){
-	        wp_die('<h1 style="color:red">Website under Maintenance</h1><br />We are performing scheduled maintenance. We will be back online shortly!');
-	    }
-    endif;
-}
-add_action('get_header', 'wp_maintenance_mode');
 
+if ( !function_exists( 'wp_maintenance_mode' ) ) {
+	function wp_maintenance_mode(){
+		$maintenance = of_get_option( 'maintenance_checkbox', 'no entry' );
+		if ( $maintenance == 1 ) :
+		    if(!current_user_can('edit_themes') || !is_user_logged_in()){
+		        wp_die('<h1 style="color:red">Website under Maintenance</h1><br />We are performing scheduled maintenance. We will be back online shortly!');
+		    }
+	    endif;
+	}
+	add_action('get_header', 'wp_maintenance_mode');
+}
 ?>

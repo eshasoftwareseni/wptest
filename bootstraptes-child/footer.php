@@ -5,7 +5,7 @@
 <footer class="blog-footer">
     <?php if ( is_active_sidebar( 'footer-copyright-text' ) ) { dynamic_sidebar( 'footer-copyright-text' ); } ?>
     <div class="footer-copyright-text">
-    	<?php echo of_get_option( 'example_editor', 'no entry'); ?>
+    	<?php echo of_get_option( 'example_editor' ); ?>
     </div>
 </footer>
 
