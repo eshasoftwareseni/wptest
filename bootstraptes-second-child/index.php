@@ -20,8 +20,7 @@
             <li><?php next_posts_link('Previous'); ?></li>
             <li><?php previous_posts_link('Next'); ?></li>
         </ul>
-    </nav>
-    
+    </nav>    
 </div><!-- /.blog-main -->
 
 <?php if(is_front_page() == false OR of_get_option( 'sidebar_checkbox' ) == 1) get_sidebar(); ?>
