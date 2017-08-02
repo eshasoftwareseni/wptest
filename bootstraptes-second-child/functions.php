@@ -56,7 +56,7 @@ if ( !function_exists( 'ajax_listings' ) ) {
 
 	function ajax_listings() {
 		$keyword = sanitize_text_field($_POST['name']);		    	
-		$query = new WP_Query(array('s' => $keyword, 'post_status' => 'publish'));
+		$query = new WP_Query(array('post_type'=>'post', 's' => $keyword, 'post_status' => 'publish'));
 		$titles = array();
 		
 		while ( $query->have_posts() ) : $query->the_post();
@@ -82,16 +82,17 @@ if ( !function_exists( 'qwerk_search_form' ) ) {
 	    </form>
 	    <?php
 		    if (isset($_GET['sul-submit'])) {
-
 		    $keyword = sanitize_text_field($_GET['sulname']);
-
+			//Protect against arbitrary paged values
+			$paged = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
 		    $args = array('post_type'=>'post', 
 		    				's' => $keyword, 
 		    				'post_status' => 'publish', 
-		    				'posts_per_page' => 5);
+		    				'posts_per_page' => 5,
+		    				'paged' => $paged);
 
 			$query = new WP_Query( $args );
-			?>
+			if ( $query->have_posts() ) { ?>
 		  <br/>
 		  <table id="example1" class="table table-striped table-bordered" cellspacing="0" width="100%">
 		  		<thead>
@@ -101,7 +102,7 @@ if ( !function_exists( 'qwerk_search_form' ) ) {
 		            </tr>
 		        </thead>
 		        <tbody>
-		        <?php if ( $query->have_posts() ) {
+		        <?php
         		while ( $query->have_posts() ) : $query->the_post();?>
 		            <tr>
 		                <td class="manage-column ss-list-width"><?php echo get_the_date('l F j, Y'); ?></td>
@@ -111,8 +112,7 @@ if ( !function_exists( 'qwerk_search_form' ) ) {
 		        </tbody>
 		     </table>
 		     <br/>
-	    <?php  
-	    $big = 999999999; // need an unlikely integer
+	    <?php $big = 999999999; // need an unlikely integer
 
 		echo paginate_links( array(
 			'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
