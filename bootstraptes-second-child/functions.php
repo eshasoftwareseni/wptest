@@ -71,7 +71,6 @@ if ( !function_exists( 'mysite_js' ) ) {
 
 		// Enqueued script with localized data.
 		wp_enqueue_script( 'mysite-js' );
-		wp_register_style( 'jquery-ui-styles','http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css' );		
 	}
 
 	add_action('wp_enqueue_scripts', 'mysite_js');
