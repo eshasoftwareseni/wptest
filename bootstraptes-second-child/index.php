@@ -12,7 +12,9 @@
     </div><!-- /.blog-post -->
     <?php
         endwhile;
-    } 
+    }
+
+    if(is_front_page() == true) {  
     ?>
 
     <nav>
@@ -20,7 +22,9 @@
             <li><?php next_posts_link('Previous'); ?></li>
             <li><?php previous_posts_link('Next'); ?></li>
         </ul>
-    </nav>    
+    </nav>
+
+    <?php } ?>    
 </div><!-- /.blog-main -->
 
 <?php if(is_front_page() == false OR of_get_option( 'sidebar_checkbox' ) == 1) get_sidebar(); ?>

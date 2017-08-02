@@ -58,8 +58,6 @@ if ( !function_exists( 'mysite_js' ) ) {
 		wp_enqueue_script('jquery');
 		wp_enqueue_script('jquery-ui-core');
 		wp_enqueue_script('jquery-ui-autocomplete');
-		wp_enqueue_script('dataTables', get_stylesheet_directory_uri().'/js/jquery.dataTables.min.js', array('jquery'));
-		wp_enqueue_script('dataTables.bootstrap', get_stylesheet_directory_uri().'/js/dataTables.bootstrap.min.js');
 				
 		// Register the script
 		wp_register_script('mysite-js', get_stylesheet_directory_uri().'/js/mysite.js', array('jquery', 'jquery-ui-autocomplete'));
@@ -73,8 +71,7 @@ if ( !function_exists( 'mysite_js' ) ) {
 
 		// Enqueued script with localized data.
 		wp_enqueue_script( 'mysite-js' );
-		
-		wp_enqueue_style('dataTables.css', get_stylesheet_directory_uri().'/css/dataTables.bootstrap.min.css');
+		wp_register_style( 'jquery-ui-styles','http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css' );		
 	}
 
 	add_action('wp_enqueue_scripts', 'mysite_js');
@@ -106,18 +103,25 @@ if ( !function_exists( 'ajax_listings' ) ) {
 if ( !function_exists( 'qwerk_search_form' ) ) {
 	function qwerk_search_form(){
 	    ob_start();?>
-	    <form method="post" id="sul-searchform" name="sul-searchform" action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ); ?>">
+	    <form method="get" id="sul-searchform" name="sul-searchform" action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ); ?>">
 	      <label for="as" class="assistive-text">Search</label>
-	      <input type="text" class="field" name="sulname" id="sul-name" value="<?php echo (!empty($_POST['sulname'])) ? $_POST['sulname'] : '' ;?>" placeholder="Search" />
+	      <input type="text" class="field" name="sulname" id="sul-name" value="<?php echo (!empty($_GET['sulname'])) ? $_GET['sulname'] : '' ;?>" placeholder="Search" />
 	      <input type="submit" class="submit" name="sul-submit" id="sul-searchsubmit" value="Sumbit" />
 	    </form>
 	    <?php
-		    if (isset($_POST['sul-submit'])) {
-		    $keyword = sanitize_text_field($_POST['sulname']);		    	
-			$query = new WP_Query(array('s' => $keyword, 'post_status' => 'publish'));
+		    if (isset($_GET['sul-submit'])) {
+
+		    $keyword = sanitize_text_field($_GET['sulname']);
+
+		    $args = array('post_type'=>'post', 
+		    				's' => $keyword, 
+		    				'post_status' => 'publish', 
+		    				'posts_per_page' => 5);
+
+			$query = new WP_Query( $args );
 			?>
 		  <br/>
-		  <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+		  <table id="example1" class="table table-striped table-bordered" cellspacing="0" width="100%">
 		  		<thead>
 		            <tr>
 		                <th class="manage-column ss-list-width">Date</th>
@@ -131,13 +135,25 @@ if ( !function_exists( 'qwerk_search_form' ) ) {
 		                <td class="manage-column ss-list-width"><?php echo get_the_date('l F j, Y'); ?></td>
 		                <td class="manage-column ss-list-width"><?php echo get_the_title(); ?></td>
 		            </tr>
-		        <?php endwhile; } ?>
+		        <?php endwhile; ?>
 		        </tbody>
 		     </table>
-	    <?php } 
+		     <br/>
+	    <?php  
+	    $big = 999999999; // need an unlikely integer
 
+		echo paginate_links( array(
+			'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+			'format' => '?paged=%#%',
+			'current' => max( 1, get_query_var('paged') ),
+			'total' => $query->max_num_pages
+		) );
+
+		}
+		
 		// Restore original Post Data
 		wp_reset_postdata();
+		}
 
 		return ob_get_clean();
 	}
