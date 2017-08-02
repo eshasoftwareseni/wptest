@@ -69,4 +69,43 @@ if (!function_exists( 'bootstraptes_widgets_init' )) {
     }
     add_action( 'widgets_init', 'bootstraptes_widgets_init' );
 }
+
+/*
+ * Loads the Options Panel
+ *
+ * If you're loading from a child theme use stylesheet_directory
+ * instead of template_directory
+ */
+define( 'OPTIONS_FRAMEWORK_DIRECTORY', get_template_directory_uri() . '/inc/' );
+require_once dirname( __FILE__ ) . '/inc/options-framework.php';
+// Loads options.php from child or parent theme
+$optionsfile = locate_template( 'options.php' );
+load_template( $optionsfile );
+
+/* 
+ * Helper function to return the theme option value. If no value has been saved, it returns $default.
+ * Needed because options are saved as serialized strings.
+ *
+ * This code allows the theme to work without errors if the Options Framework plugin has been disabled.
+ */
+
+if ( !function_exists( 'of_get_option' ) ) {
+    function of_get_option($name, $default = false) {
+        
+        $optionsframework_settings = get_option('optionsframework');
+        
+        // Gets the unique option id
+        $option_name = $optionsframework_settings['id'];
+        
+        if ( get_option($option_name) ) {
+            $options = get_option($option_name);
+        }
+            
+        if ( isset($options[$name]) ) {
+            return $options[$name];
+        } else {
+            return $default;
+        }
+    }
+}
 ?>
