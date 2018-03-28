@@ -130,7 +130,7 @@ if (!class_exists( 'eshaMessagesClass' )) {
          */
         public function esha_messages_shortcode() {
             ob_start();
-            esha_messages_add();
+            $this->esha_messages_add();
             return ob_get_clean();
         }
 
@@ -234,7 +234,7 @@ if (!class_exists( 'eshaMessagesWidget' )) {
                         <th class="manage-column ss-list-width">Messages</th>
                     </tr>
                     <?php foreach ($testi as $s) { ?>
-                        <tr>";
+                        <tr>
                             <td class="manage-column ss-list-width"><?php echo $s->name; ?></td>
                             <td class="manage-column ss-list-width"><?php echo $s->email; ?></td>
                             <td class="manage-column ss-list-width"><?php echo $s->messages; ?></td>
